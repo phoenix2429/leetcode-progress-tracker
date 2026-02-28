@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
-import { fetchStats } from "../services/api";
-import { sortByTotal } from "../utils/helpers";
-import Navbar from "../components/layout/Navbar";
-import LeaderboardTable from "../components/leaderboard/LeaderboardTable";
-import Loading from "../components/common/Loading";
 
-function Leaderboard() {
-  const [data, setData] = useState(null);
+export default function Leaderboard() {
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetchStats().then((res) => {
-      setData(sortByTotal(res));
-    });
+    fetch("/latest.json")
+      .then((res) => res.json())
+      .then((data) => {
+        const sorted = [...data].sort((a, b) => b.total - a.total);
+        setUsers(sorted);
+      });
   }, []);
 
-  if (!data) return <Loading />;
-
   return (
-    <div className="container">
+    <div style={{ padding: "40px" }}>
       <h1>Leaderboard</h1>
-      <Navbar />
-      <LeaderboardTable data={data} />
+      {users.map((user, index) => (
+        <div key={user.username}>
+          #{index + 1} {user.username} — {user.total} problems
+        </div>
+      ))}
     </div>
   );
 }
-
-export default Leaderboard;

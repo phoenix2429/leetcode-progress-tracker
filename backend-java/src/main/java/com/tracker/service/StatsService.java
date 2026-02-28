@@ -6,6 +6,7 @@ import com.tracker.api.LeetCodeApiClient;
 import com.tracker.model.UserStats;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,6 +29,17 @@ public class StatsService {
         }
 
         return statsList;
+    }
+
+    public void generateFrontendJson() throws Exception {
+        List<UserStats> users = fetchAllUsers();
+
+        // This writes directly into frontend/public
+        File outputFile = Paths.get("../frontend/public/latest.json").toFile();
+
+        mapper.writerWithDefaultPrettyPrinter().writeValue(outputFile, users);
+
+        System.out.println("✅ JSON written to frontend/public/latest.json");
     }
 
     private UserStats fetchUserStats(String username) throws Exception {

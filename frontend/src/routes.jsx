@@ -3,7 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import Leaderboard from "./pages/Leaderboard";
 import Analytics from "./pages/Analytics";
 
-function RoutesConfig() {
+export default function RoutesComponent() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
@@ -12,5 +12,3 @@ function RoutesConfig() {
     </Routes>
   );
 }
-
-export default RoutesConfig;

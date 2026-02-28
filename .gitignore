@@ -1,15 +1,4 @@
-# Node
-node_modules/
-dist/
+node_modules
+backend-java/target
+frontend/dist
 .env
-
-# Java
-target/
-*.class
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
