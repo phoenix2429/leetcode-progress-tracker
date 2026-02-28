@@ -1,0 +1,50 @@
+name: Fetch LeetCode Stats
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours
+  workflow_dispatch:        # manual trigger button
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Java
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # 3️⃣ Build backend
+      - name: Build with Maven
+        working-directory: backend-java
+        run: mvn -B clean package
+
+      # 4️⃣ Run fetcher
+      - name: Run LeetCode fetcher
+        working-directory: backend-java
+        run: mvn exec:java
+
+      # 5️⃣ Commit updated data
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name "leetcode-bot"
+          git config --global user.email "bot@users.noreply.github.com"
+
+          git add data/
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🤖 Auto-update LeetCode stats"
+            git push
+          fi

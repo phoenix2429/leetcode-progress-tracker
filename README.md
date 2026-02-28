@@ -1,0 +1,22 @@
+# 🚀 Serverless LeetCode Progress Tracker
+
+Fully automated serverless tracker using:
+
+- Java (data fetcher)
+- GitHub Actions (scheduler)
+- React + Vite (dashboard)
+- Vercel (deployment)
+
+## Run locally
+
+Backend:
+
+cd backend-java
+mvn clean package
+java -jar target/tracker.jar
+
+Frontend:
+
+cd frontend
+npm install
+npm run dev
