@@ -1,4 +1,4 @@
-# 🚀 Serverless LeetCode Progress Tracker
+# Serverless LeetCode Progress Tracker
 
 Fully automated serverless tracker using:
 
@@ -13,7 +13,7 @@ Backend:
 
 cd backend-java
 mvn clean package
-java -jar target/tracker.jar
+mvn exec:java
 
 Frontend:
 
